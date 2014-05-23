@@ -41,3 +41,5 @@ module Tilt
     end
   end
 end
+
+require 'tilt/jbuilder/patch/railtie'
