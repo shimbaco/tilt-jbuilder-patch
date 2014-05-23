@@ -27,10 +27,12 @@ module Tilt
           if data.kind_of?(::Proc)
             return data.call(::Tilt::Jbuilder.new(scope))
           else
-            partial_path = data.match(/json\.partial\![ (]*['"](.*)['"]/)
+            partial_paths = data.scan(/json\.partial\![ (]*['"](.*)['"]/).flatten.uniq
 
-            if partial_path.present?
-              data.gsub!(partial_path[1], "app/views/#{partial_path[1]}")
+            if partial_paths.present?
+              partial_paths.each do |path|
+                data.gsub!(path, "app/views/#{path}")
+              end
               data.gsub!(%r(//+), '/')
             end
 
