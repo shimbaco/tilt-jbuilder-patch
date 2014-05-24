@@ -13,6 +13,9 @@ module Tilt
               scope.instance_variable_set(variable, instance_variable_get(variable))
             end
 
+            scope.class.send(:include, AbstractController::Helpers)
+            scope.class.send(:include, Devise::Controllers::Helpers)
+
             template.render(scope)
           end
 
